@@ -1,30 +1,32 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import MoviesList from "./MoviesList";
 import { fetchMovies, deleteMovie } from "../store/actions/movies";
 
-const MoviesTop = ({ movies, fetchMovies, deleteMovie }) => {
+const MoviesTop = () => {
+  const allMovies = useSelector((state) => state.movies);
+  const topMovies = useMemo(
+    () => allMovies.sort((a, b) => b.rating > a.rating).slice(0, 3),
+    [allMovies]
+  );
+  const dispatch = useDispatch();
+  const deleteHandler = useCallback(
+    (props) => {
+      dispatch(deleteMovie(props));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   return (
     <div className="ui form padded segment">
       <h1>TOP-3 movies</h1>
-      <MoviesList
-        movies={movies.sort((a, b) => b.rating > a.rating).slice(0, 3)}
-        deleteMovie={deleteMovie}
-      />
+      <MoviesList movies={topMovies} deleteMovie={deleteHandler} />
     </div>
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    movies: state.movies,
-  };
-}
-
-export default connect(mapStateToProps, { fetchMovies, deleteMovie })(
-  MoviesTop
-);
+export default React.memo(MoviesTop);

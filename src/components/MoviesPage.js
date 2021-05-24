@@ -1,27 +1,28 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import MoviesList from "./MoviesList";
 import { fetchMovies, deleteMovie } from "../store/actions/movies";
 
-const MoviesPage = ({ fetchMovies, movies, deleteMovie }) => {
+const MoviesPage = () => {
+  const allMovies = useSelector((state) => state.movies);
+  const dispatch = useDispatch();
+  const deleteHandler = useCallback(
+    (props) => {
+      dispatch(deleteMovie(props));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   return (
     <div className="ui form padded segment">
       <h1>All movies</h1>
-      <MoviesList movies={movies} deleteMovie={deleteMovie} />
+      <MoviesList movies={allMovies} deleteMovie={deleteHandler} />
     </div>
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    movies: state.movies,
-  };
-}
-
-export default connect(mapStateToProps, { fetchMovies, deleteMovie })(
-  MoviesPage
-);
+export default React.memo(MoviesPage);

@@ -15,4 +15,4 @@ const MoviesList = ({ movies, deleteMovie }) => {
   return <div>{movies.length === 0 ? emptyMessage : MoviesList}</div>;
 };
 
-export default MoviesList;
+export default React.memo(MoviesList);
