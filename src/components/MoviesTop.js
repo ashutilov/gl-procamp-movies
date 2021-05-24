@@ -6,7 +6,7 @@ import { fetchMovies, deleteMovie } from "../store/actions/movies";
 const MoviesTop = ({ movies, fetchMovies, deleteMovie }) => {
   useEffect(() => {
     fetchMovies();
-  });
+  }, []);
 
   return (
     <div className="ui form padded segment">
