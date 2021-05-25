@@ -6,8 +6,8 @@ const MoviesList = ({ movies, deleteMovie }) => {
 
   const MoviesList = (
     <div className="ui cards movie-list">
-      {movies.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} deleteMovie={deleteMovie} />
+      {movies.map((movie, index) => (
+        <MovieCard movie={movie} key={index} deleteMovie={deleteMovie} />
       ))}
     </div>
   );
