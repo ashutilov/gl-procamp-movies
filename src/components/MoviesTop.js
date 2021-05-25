@@ -18,7 +18,9 @@ const MoviesTop = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchMovies());
+    if (!allMovies.length) {
+      dispatch(fetchMovies());
+    }
   }, [dispatch]);
 
   return (
