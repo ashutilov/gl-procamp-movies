@@ -3,15 +3,15 @@ import classnames from "classnames";
 
 const DEFAULT_ERROR_TEXT = "Can not be empty";
 
-const MovieForm = ({ movie, saveMovie }) => {
-  const [id, setId] = useState(movie ? movie.id : null);
-  const [title, setTitle] = useState(movie ? movie.title : "");
-  const [cover, setCover] = useState(movie ? movie.cover : "");
-  const [year, setYear] = useState(movie ? movie.year : "");
+const MovieForm = ({ movie = {}, saveMovie }) => {
+  const [id, setId] = useState(movie.id ? movie.id : null);
+  const [title, setTitle] = useState(movie.title ? movie.title : "");
+  const [cover, setCover] = useState(movie.cover ? movie.cover : "");
+  const [year, setYear] = useState(movie.year ? movie.year : "");
   const [description, setDescription] = useState(
-    movie ? movie.description : ""
+    movie.description ? movie.description : ""
   );
-  const [rating, setRating] = useState(movie ? movie.rating : "");
+  const [rating, setRating] = useState(movie.rating ? movie.rating : "");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -66,6 +66,7 @@ const MovieForm = ({ movie, saveMovie }) => {
           name="title"
           value={title}
           onChange={(e) => {
+            e.preventDefault();
             handleErrorChange(e);
             setTitle(e.target.value);
           }}
@@ -81,6 +82,7 @@ const MovieForm = ({ movie, saveMovie }) => {
           name="year"
           value={year}
           onChange={(e) => {
+            e.preventDefault();
             handleErrorChange(e);
             setYear(e.target.value);
           }}
@@ -100,6 +102,7 @@ const MovieForm = ({ movie, saveMovie }) => {
           name="description"
           value={description}
           onChange={(e) => {
+            e.preventDefault();
             handleErrorChange(e);
             setDescription(e.target.value);
           }}
@@ -117,6 +120,7 @@ const MovieForm = ({ movie, saveMovie }) => {
           max="10"
           value={rating}
           onChange={(e) => {
+            e.preventDefault();
             handleErrorChange(e);
             setRating(e.target.value);
           }}
@@ -132,6 +136,7 @@ const MovieForm = ({ movie, saveMovie }) => {
           name="cover"
           value={cover}
           onChange={(e) => {
+            e.preventDefault();
             handleErrorChange(e);
             setCover(e.target.value);
           }}
